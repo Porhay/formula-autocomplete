@@ -4,9 +4,9 @@
     width: 100%;
     max-width: 600px;
     margin: auto;
-  }
-  
-  .formula-tags-container {
+}
+
+.formula-tags-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -14,9 +14,9 @@
     border-radius: 4px;
     padding: 5px;
     background-color: #fff;
-  }
-  
-  .tag {
+}
+
+.tag {
     display: flex;
     align-items: center;
     background-color: #f1f1f1;
@@ -24,34 +24,50 @@
     border-radius: 3px;
     padding: 2px 5px;
     margin: 2px;
-  
+
     .tag-input {
-      border: none;
-      background: transparent;
-      outline: none;
-      width: auto;
-      max-width: 100px;
+        border: none;
+        background: transparent;
+        outline: none;
+        width: auto;
+        max-width: 100px;
     }
-  
+
     .remove-tag {
-      border: none;
-      background: transparent;
-      color: #888;
-      cursor: pointer;
-      margin-left: 5px;
+        border: none;
+        background: transparent;
+        color: #888;
+        cursor: pointer;
+        margin-left: 5px;
     }
-  }
-  
-  .formula-input {
+}
+
+.operand-tag {
+    display: flex;
+    align-items: center;
+    padding: 4px 1px 4px 0;
+    margin: 2px 0;
+    width: 6px;
+
+    .tag-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: auto;
+        max-width: 6px;
+    }
+}
+
+.formula-input {
     border: none;
     outline: none;
     flex: 1;
     min-width: 100px;
     padding: 2px 5px;
     font-size: 14px;
-  }
-  
-  .suggestions-list {
+}
+
+.suggestions-list {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #fff;
@@ -61,38 +77,37 @@
     max-height: 200px;
     overflow-y: auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  
+
     li {
-      padding: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-  
-      &:hover {
-        background-color: #f1f1f1;
-      }
-  
-      .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
         display: flex;
-        flex-direction: column;
-        width: 100%;
-  
-        .suggestion-name {
-          font-weight: bold;
-          font-size: 14px;
+        align-items: center;
+
+        &:hover {
+            background-color: #f1f1f1;
         }
-  
-        .suggestion-category {
-          font-size: 12px;
-          color: #888;
+
+        .suggestion-item {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .suggestion-name {
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+            .suggestion-category {
+                font-size: 12px;
+                color: #888;
+            }
+
+            .suggestion-value {
+                font-size: 12px;
+                color: #555;
+                margin-left: auto;
+            }
         }
-  
-        .suggestion-value {
-          font-size: 12px;
-          color: #555;
-          margin-left: auto;
-        }
-      }
     }
-  }
-  
+}

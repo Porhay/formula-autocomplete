@@ -24,9 +24,7 @@ const FormulaInput: React.FC = () => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === 'Enter' && operands.includes(e.key)
-    ) {
+    if (e.key === 'Enter' && operands.includes(e.key)) {
       handleAddTag(inputValue); // add tag
     } else if (e.key === 'Enter' && inputValue) {
       handleAddTag(inputValue);
@@ -48,22 +46,33 @@ const FormulaInput: React.FC = () => {
   return (
     <div className="formula-input-container">
       <div className="formula-tags-container">
-        {formula.map((tag, index) => (
-          <span key={index} className="tag">
-            <input
-              type="text"
-              value={tag.name}
-              onChange={(e) => handleEditTag(index, e.target.value)}
-              className="tag-input"
-            />
-            <button
-              className="remove-tag"
-              onClick={() => handleRemoveTag(index)}
-            >
-              x
-            </button>
-          </span>
-        ))}
+        {formula.map((tag, index) =>
+          operands.includes(tag.name) || tag.name === '' ? (
+            <span key={index} className="operand-tag">
+              <input
+                type="text"
+                value={tag.name}
+                onChange={(e) => handleEditTag(index, e.target.value)}
+                className="tag-input"
+              />
+            </span>
+          ) : (
+            <span key={index} className="tag">
+              <input
+                type="text"
+                value={tag.name}
+                onChange={(e) => handleEditTag(index, e.target.value)}
+                className="tag-input"
+              />
+              <button
+                className="remove-tag"
+                onClick={() => handleRemoveTag(index)}
+              >
+                x
+              </button>
+            </span>
+          ),
+        )}
         <input
           type="text"
           value={inputValue}
