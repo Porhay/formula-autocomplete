@@ -16,7 +16,7 @@ const FormulaInput: React.FC = () => {
 
   const handleAddTag = (tagName: string) => {
     addTag({ name: tagName });
-    setInputValue('');
+    setTimeout(() => setInputValue(''), 0); // hotfix
   };
 
   const handleRemoveTag = (index: number) => {
@@ -24,10 +24,10 @@ const FormulaInput: React.FC = () => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && operands.includes(e.key)) {
-      handleAddTag(inputValue); // add tag
-    } else if (e.key === 'Enter' && inputValue) {
+    if (e.key === 'Enter' && inputValue) {
       handleAddTag(inputValue);
+    } else if (operands.includes(e.key)) {
+      handleAddTag(e.key);
     } else if (
       e.key === 'Backspace' &&
       inputValue === '' &&
