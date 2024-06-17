@@ -1,7 +1,8 @@
-import '../styles/FormulaInput.scss'
+import '../styles/FormulaInput.scss';
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useStore } from '../hooks/useFormulaState';
 import { useAutocomplete } from '../hooks/useAutocomplete';
+
 
 const FormulaInput: React.FC = () => {
   const { formula, setFormula, addTag, removeTag } = useStore();
@@ -37,16 +38,17 @@ const FormulaInput: React.FC = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="formula-input-container">
+      <div className="formula-tags-container">
         {formula.map((tag, index) => (
           <span key={index} className="tag">
             <input 
               type="text" 
               value={tag.name} 
               onChange={(e) => handleEditTag(index, e.target.value)} 
+              className="tag-input"
             />
-            <button onClick={() => handleRemoveTag(index)}>x</button>
+            <button className="remove-tag" onClick={() => handleRemoveTag(index)}>x</button>
           </span>
         ))}
         <input 
@@ -55,10 +57,11 @@ const FormulaInput: React.FC = () => {
           onChange={handleInputChange} 
           onKeyDown={handleKeyDown} 
           placeholder="Enter your formula..."
+          className="formula-input"
         />
       </div>
       {suggestions.length > 0 && (
-        <ul>
+        <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
             <li key={index} onClick={() => handleAddTag(suggestion)}>
               {suggestion.name}

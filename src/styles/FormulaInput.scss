@@ -1,0 +1,71 @@
+.formula-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .formula-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #fff;
+  }
+  
+  .tag {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 5px;
+    margin: 2px;
+  
+    .tag-input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: auto;
+      max-width: 100px;
+    }
+  
+    .remove-tag {
+      border: none;
+      background: transparent;
+      color: #888;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+  }
+  
+  .formula-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 100px;
+    padding: 2px 5px;
+    font-size: 14px;
+  }
+  
+  .suggestions-list {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 5px;
+    padding: 5px;
+    list-style: none;
+  
+    li {
+      padding: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+  }
+  

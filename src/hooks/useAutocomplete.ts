@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { autocompleteUrl } from '../constants';
 
-interface Suggestion {
+export interface Suggestion {
   name: string;
   category: string;
   value: number | string;
