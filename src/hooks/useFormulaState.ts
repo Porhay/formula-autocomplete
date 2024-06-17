@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 type FormulaTag = {
+  value?: any;
   name: string;
 };
 

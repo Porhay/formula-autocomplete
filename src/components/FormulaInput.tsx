@@ -28,7 +28,7 @@ const FormulaInput: React.FC = () => {
     if (e.key === 'Enter' && inputValue === '') {
         calculateResult();
     } else if (e.key === 'Enter' && inputValue) {
-      handleAddTag({ name: inputValue });
+      handleAddTag({ name: inputValue, value: inputValue });
     } else if (operands.includes(e.key)) {
       handleAddTag({ name: e.key, valueType: 'operand' });
     } else if (
@@ -50,8 +50,8 @@ const FormulaInput: React.FC = () => {
   const calculateResult = () => {
     let calcResult = 0;
     formula.forEach(tag => {
-      if (!isNaN(Number(tag.name))) {
-        calcResult += Number(tag.name);
+      if (!isNaN(Number(tag.value))) {
+        calcResult += Number(tag.value);
       }
     });
     setResult(calcResult);
