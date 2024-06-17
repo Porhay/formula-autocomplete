@@ -1,2 +1,2 @@
 # formula-autocomplete
-Formula autocomplete widget. Build on React.js with Zustand state management.
+Formula autocomplete widget. Built on React.js with Zustand state management.

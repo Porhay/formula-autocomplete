@@ -1,20 +1,18 @@
 import '../styles/Main.scss';
-import { useEffect, useState } from 'react';
+import { create } from 'zustand'
+import FormulaInput from '../components/FormulaInput';
 
-interface IState {}
+
+const useStore = create((set) => ({
+  count: 1,
+  inc: () => set((state: { count: number; }) => ({ count: state.count + 1 })),
+}))
 
 const MainPage = () => {
 
-  // LOCAL STATE
-  const updateState = (newState: Partial<IState>): void => setState((prevState) => ({ ...prevState, ...newState }));
-  const [state, setState] = useState<IState>({});
-
-  // FUNCTIONS
-  // COMPONENTS
-
   return (
     <div className="main-page-container">
-      halo from main
+      <FormulaInput />
     </div>
   );
 };
