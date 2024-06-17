@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useStore } from '../hooks/useFormulaState';
 import { useAutocomplete, Suggestion } from '../hooks/useAutocomplete';
 import '../styles/FormulaInput.scss';
+import { operands } from '../constants';
 
 const FormulaInput: React.FC = () => {
   const { formula, setFormula, addTag, removeTag } = useStore();
@@ -24,8 +25,7 @@ const FormulaInput: React.FC = () => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (
-      e.key === 'Enter' &&
-      ['+', '-', '*', '/', '^', '(', ')'].includes(e.key)
+      e.key === 'Enter' && operands.includes(e.key)
     ) {
       handleAddTag(inputValue); // add tag
     } else if (e.key === 'Enter' && inputValue) {
