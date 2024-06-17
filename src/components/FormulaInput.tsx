@@ -49,9 +49,28 @@ const FormulaInput: React.FC = () => {
 
   const calculateResult = () => {
     let calcResult = 0;
-    formula.forEach(tag => {
-      if (!isNaN(Number(tag.value))) {
-        calcResult += Number(tag.value);
+    let currentOperator = '+';
+  
+    formula.forEach((tag, index) => {
+      if (operands.includes(tag.name)) {
+        currentOperator = tag.name;
+      } else if (!isNaN(Number(tag.value))) {
+        switch (currentOperator) {
+          case '+':
+            calcResult += Number(tag.value);
+            break;
+          case '-':
+            calcResult -= Number(tag.value);
+            break;
+          case '*':
+            calcResult *= Number(tag.value);
+            break;
+          case '/':
+            calcResult /= Number(tag.value);
+            break;
+          default:
+            break;
+        }
       }
     });
     setResult(calcResult);
