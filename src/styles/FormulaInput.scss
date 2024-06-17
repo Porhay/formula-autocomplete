@@ -56,15 +56,42 @@
     border-radius: 4px;
     background-color: #fff;
     margin-top: 5px;
-    padding: 5px;
+    padding: 0;
     list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   
     li {
-      padding: 5px;
+      padding: 10px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
   
       &:hover {
         background-color: #f1f1f1;
+      }
+  
+      .suggestion-item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+  
+        .suggestion-name {
+          font-weight: bold;
+          font-size: 14px;
+        }
+  
+        .suggestion-category {
+          font-size: 12px;
+          color: #888;
+        }
+  
+        .suggestion-value {
+          font-size: 12px;
+          color: #555;
+          margin-left: auto;
+        }
       }
     }
   }

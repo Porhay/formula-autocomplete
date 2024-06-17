@@ -1,8 +1,7 @@
-import '../styles/FormulaInput.scss';
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useStore } from '../hooks/useFormulaState';
-import { useAutocomplete } from '../hooks/useAutocomplete';
-
+import { useAutocomplete, Suggestion } from '../hooks/useAutocomplete';
+import '../styles/FormulaInput.scss';
 
 const FormulaInput: React.FC = () => {
   const { formula, setFormula, addTag, removeTag } = useStore();
@@ -14,8 +13,8 @@ const FormulaInput: React.FC = () => {
     setInputValue(value);
   };
 
-  const handleAddTag = (tag: { name: string }) => {
-    addTag(tag);
+  const handleAddTag = (tagName: string) => {
+    addTag({ name: tagName });
     setInputValue('');
   };
 
@@ -24,10 +23,19 @@ const FormulaInput: React.FC = () => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue) {
-      handleAddTag({ name: inputValue });
-    } else if (e.key === 'Enter' && ['+', '-', '*', '/', '^', '(', ')'].includes(e.key)) {
-      handleAddTag({ name: e.key });
+    if (
+      e.key === 'Enter' &&
+      ['+', '-', '*', '/', '^', '(', ')'].includes(e.key)
+    ) {
+      handleAddTag(inputValue); // add tag
+    } else if (e.key === 'Enter' && inputValue) {
+      handleAddTag(inputValue);
+    } else if (
+      e.key === 'Backspace' &&
+      inputValue === '' &&
+      formula.length > 0
+    ) {
+      handleRemoveTag(formula.length - 1);
     }
   };
 
@@ -42,20 +50,25 @@ const FormulaInput: React.FC = () => {
       <div className="formula-tags-container">
         {formula.map((tag, index) => (
           <span key={index} className="tag">
-            <input 
-              type="text" 
-              value={tag.name} 
-              onChange={(e) => handleEditTag(index, e.target.value)} 
+            <input
+              type="text"
+              value={tag.name}
+              onChange={(e) => handleEditTag(index, e.target.value)}
               className="tag-input"
             />
-            <button className="remove-tag" onClick={() => handleRemoveTag(index)}>x</button>
+            <button
+              className="remove-tag"
+              onClick={() => handleRemoveTag(index)}
+            >
+              x
+            </button>
           </span>
         ))}
-        <input 
-          type="text" 
-          value={inputValue} 
-          onChange={handleInputChange} 
-          onKeyDown={handleKeyDown} 
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           placeholder="Enter your formula..."
           className="formula-input"
         />
@@ -63,8 +76,18 @@ const FormulaInput: React.FC = () => {
       {suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
-            <li key={index} onClick={() => handleAddTag(suggestion)}>
-              {suggestion.name}
+            <li key={index} onClick={() => handleAddTag(suggestion.name)}>
+              <div className="suggestion-item">
+                <span className="suggestion-name">{suggestion.name}</span>
+                <span className="suggestion-category">
+                  {suggestion.category}
+                </span>
+                <span className="suggestion-value">
+                  {typeof suggestion.value === 'number'
+                    ? suggestion.value
+                    : suggestion.value}
+                </span>
+              </div>
             </li>
           ))}
         </ul>

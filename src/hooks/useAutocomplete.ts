@@ -10,12 +10,14 @@ export interface Suggestion {
 }
 
 const fetchSuggestions = async (query: string): Promise<Suggestion[]> => {
-    try {
-      const { data } = await axios.get<Suggestion[]>(`${autocompleteUrl}?name=${query}`);
-      return data;
-    } catch (error) {
-      return []; // means that no data found
-    }
+  try {
+    const { data } = await axios.get<Suggestion[]>(
+      `${autocompleteUrl}?name=${query}`,
+    );
+    return data;
+  } catch (error) {
+    return []; // means that no data found
+  }
 };
 
 export const useAutocomplete = (query: string) => {
