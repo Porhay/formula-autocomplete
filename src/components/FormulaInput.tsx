@@ -14,8 +14,8 @@ const FormulaInput: React.FC = () => {
     setInputValue(value);
   };
 
-  const handleAddTag = (tagName: string) => {
-    addTag({ name: tagName });
+  const handleAddTag = (tag: any) => {
+    addTag(tag);
     setTimeout(() => setInputValue(''), 0); // hotfix
   };
 
@@ -25,9 +25,9 @@ const FormulaInput: React.FC = () => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue) {
-      handleAddTag(inputValue);
+      handleAddTag({name: inputValue});
     } else if (operands.includes(e.key)) {
-      handleAddTag(e.key);
+      handleAddTag({name: e.key, valueType: 'operand'});
     } else if (
       e.key === 'Backspace' &&
       inputValue === '' &&
@@ -35,6 +35,8 @@ const FormulaInput: React.FC = () => {
     ) {
       handleRemoveTag(formula.length - 1);
     }
+    console.log(formula);
+    
   };
 
   const handleEditTag = (index: number, value: string) => {
@@ -68,7 +70,7 @@ const FormulaInput: React.FC = () => {
                 className="remove-tag"
                 onClick={() => handleRemoveTag(index)}
               >
-                x
+                [x]
               </button>
             </span>
           ),
@@ -85,7 +87,7 @@ const FormulaInput: React.FC = () => {
       {suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
-            <li key={index} onClick={() => handleAddTag(suggestion.name)}>
+            <li key={index} onClick={() => handleAddTag(suggestion)}>
               <div className="suggestion-item">
                 <span className="suggestion-name">{suggestion.name}</span>
                 <span className="suggestion-category">
