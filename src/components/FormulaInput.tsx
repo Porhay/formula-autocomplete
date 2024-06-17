@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useStore } from '../hooks/useFormulaState';
 import { useAutocomplete, Suggestion } from '../hooks/useAutocomplete';
 import '../styles/FormulaInput.scss';
@@ -7,6 +7,7 @@ import { operands } from '../constants';
 const FormulaInput: React.FC = () => {
   const { formula, setFormula, addTag, removeTag } = useStore();
   const [inputValue, setInputValue] = useState('');
+  const [result, setResult] = useState<number | null>(null);
   const { data: suggestions = [] } = useAutocomplete(inputValue);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +25,12 @@ const FormulaInput: React.FC = () => {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue) {
-      handleAddTag({name: inputValue});
+    if (e.key === 'Enter' && inputValue === '') {
+        calculateResult();
+    } else if (e.key === 'Enter' && inputValue) {
+      handleAddTag({ name: inputValue });
     } else if (operands.includes(e.key)) {
-      handleAddTag({name: e.key, valueType: 'operand'});
+      handleAddTag({ name: e.key, valueType: 'operand' });
     } else if (
       e.key === 'Backspace' &&
       inputValue === '' &&
@@ -36,7 +39,6 @@ const FormulaInput: React.FC = () => {
       handleRemoveTag(formula.length - 1);
     }
     console.log(formula);
-    
   };
 
   const handleEditTag = (index: number, value: string) => {
@@ -45,8 +47,35 @@ const FormulaInput: React.FC = () => {
     setFormula(newFormula);
   };
 
+  const calculateResult = () => {
+    let calcResult = 0;
+    formula.forEach(tag => {
+      if (!isNaN(Number(tag.name))) {
+        calcResult += Number(tag.name);
+      }
+    });
+    setResult(calcResult);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.formula-input-container')) {
+        calculateResult();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [formula]);
+
   return (
     <div className="formula-input-container">
+        <div className="result-block">
+            <strong>Result: </strong>{result !== null ? result: 0}
+        </div>
       <div className="formula-tags-container">
         {formula.map((tag, index) =>
           operands.includes(tag.name) || tag.name === '' ? (
